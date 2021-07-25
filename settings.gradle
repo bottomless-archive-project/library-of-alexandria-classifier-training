@@ -1,0 +1,4 @@
+rootProject.name = 'document-classifier-training'
+include 'document-classifier-data'
+include 'document-classifier-data-helper'
+
