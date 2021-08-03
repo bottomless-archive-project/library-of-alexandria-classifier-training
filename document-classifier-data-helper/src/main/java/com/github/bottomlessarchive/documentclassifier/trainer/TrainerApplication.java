@@ -1,20 +1,38 @@
+package com.github.bottomlessarchive.documentclassifier.trainer;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.bottomlessarchive.documentclassifier.trainer.category.CategoryFactory;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class Main {
+@SpringBootApplication
+@RequiredArgsConstructor
+public class TrainerApplication implements CommandLineRunner {
 
-    public static void main(String... args) throws IOException, InterruptedException {
-        String title = "Cicero";
+    private static int MAIN_CATEGORY_ID = 7345184;
+
+    private final CategoryFactory categoryFactory;
+
+    public static void main(String... args) {
+        SpringApplication.run(TrainerApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        categoryFactory.queryCategoriesUnderCategory(MAIN_CATEGORY_ID);
 
         ObjectMapper objectMapper = new ObjectMapper();
+        String title = "Cicero";
 
         JsonNode jsonNode = objectMapper.readTree(new URL("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&titles=" + title + "&rvslots=%2A&rvprop=content&formatversion=2&format=json"));
 
