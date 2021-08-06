@@ -3,7 +3,9 @@ package com.github.bottomlessarchive.documentclassifier.trainer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bottomlessarchive.documentclassifier.trainer.category.CategoryFactory;
+import com.github.bottomlessarchive.documentclassifier.trainer.category.domain.Category;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
@@ -11,10 +13,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 
+@Slf4j
 @SpringBootApplication
 @RequiredArgsConstructor
 public class TrainerApplication implements CommandLineRunner {
@@ -29,7 +35,9 @@ public class TrainerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        categoryFactory.queryCategoriesUnderCategory(MAIN_CATEGORY_ID);
+        final List<Category> mainCategories = categoryFactory.queryCategoriesUnderCategory(MAIN_CATEGORY_ID);
+
+        final List<Category> testCategories = loadSubcategories(mainCategories.get(29));
 
         ObjectMapper objectMapper = new ObjectMapper();
         String title = "Cicero";
@@ -75,5 +83,19 @@ public class TrainerApplication implements CommandLineRunner {
         }
 
         System.out.println("Saved result to " + Path.of("result.txt").toAbsolutePath());
+    }
+
+    private List<Category> loadSubcategories(final Category category) throws IOException {
+        log.info("Loading all subcategories under {}.", category);
+
+        final List<Category> categories = categoryFactory.queryCategoriesUnderCategory(category);
+
+        final List<Category> result = new LinkedList<>(categories);
+
+        for (Category crawledCategory : categories) {
+            result.addAll(loadSubcategories(crawledCategory));
+        }
+
+        return result;
     }
 }
