@@ -1,0 +1,21 @@
+A quarter note (American) or crotchet (British) is a note played for one quarter of the duration of a whole note (or semibreve). Quarter notes are notated with a filled-in oval note head and a straight, flagless stem. The stem usually points upwards if it is below the middle line of the stave or downwards if it is on or above the middle line. However, the stem direction may differentiate more than one part. The head of the note also reverses its orientation in relation to the stem. (See image.)
+
+Description
+
+In Unicode, the symbol is U+2669 (♩).
+
+A related value is the quarter rest (or crotchet rest). It denotes a silence of the same duration as a quarter note. It typically appears as the symbol , or occasionally, as the older symbol .
+
+History
+
+The note derives from the ('half minim') of mensural notation. The word "crotchet" comes from Old French , meaning 'little hook', diminutive of , 'hook', because of the hook used on the note in black notation. However, because the hook appeared on the eighth note (or quaver) in the later white notation, the modern French term refers to an eighth note.
+
+The quarter note is played for half the length of a half note and twice that of an eighth note. It is one beat in a bar of . The term "quarter note" is a calque (loan translation) of the German term . The names of this note (and rest) in many other languages are calqued from the same source; Romance languages usually use a term derived from the Latin meaning 'black':
+
+The Catalan, French, Galician, and Spanish names for the note (all of them meaning 'black') derive from the fact that the was the longest note to be colored in mensural white notation, which is true as well of the modern form.
+
+The Bulgarian, Chinese, Croatian, Czech, Japanese, Korean, Norwegian, Polish, Russian, Serbian and Slovak names mean "quarter" (for the note) and "quarter's pause" (for the rest).
+
+See also
+
+- List of musical symbols

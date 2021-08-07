@@ -9,18 +9,28 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-json'
+    implementation project(':document-classifier-data')
 
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+    implementation group: 'org.nd4j', name: 'nd4j-native-platform', version: '1.0.0-M1.1'
+
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation 'com.github.bottomless-archive-project:document-classifier:73adf76c77'
 }
 
 test {
