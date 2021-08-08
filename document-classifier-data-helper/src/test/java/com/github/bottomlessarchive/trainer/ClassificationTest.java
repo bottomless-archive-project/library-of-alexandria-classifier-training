@@ -4,6 +4,8 @@ import com.github.bottomlessarchive.documentclassifier.service.Deeplearning4jDoc
 import com.github.bottomlessarchive.documentclassifier.service.DocumentClassifier;
 import com.github.bottomlessarchive.documentclassifier.service.DocumentClassifierFactory;
 import com.github.bottomlessarchive.documentclassifier.service.domain.ClassificationResult;
+import com.github.bottomlessarchive.documentclassifier.service.domain.ClassifierContext;
+import com.github.bottomlessarchive.documentclassifier.service.domain.Deeplearninge4jClassifierContext;
 import com.github.bottomlessarchive.documentclassifier.service.domain.TrainingDocument;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -24,7 +28,7 @@ class ClassificationTest {
 
     @Test
     void testRomanMusic() throws URISyntaxException, IOException {
-        DocumentClassifierFactory documentClassifierFactory = new Deeplearning4jDocumentClassifierFactory();
+        DocumentClassifierFactory<Deeplearninge4jClassifierContext> documentClassifierFactory = new Deeplearning4jDocumentClassifierFactory();
 
         final URI uri = ClassLoader.getSystemResource("training-data/").toURI();
         final String[] array = uri.toString().split("!");
@@ -32,10 +36,20 @@ class ClassificationTest {
         final Path path = fs.getPath(array[1]);
 
         DocumentClassifier documentClassifier = documentClassifierFactory.newClassifier(
-                loadTrainingDocuments(path));
+                loadTrainingDocuments(path),
+                Deeplearninge4jClassifierContext.builder()
+                        .learningRate(0.025)
+                        .minLearningRate(0.025)
+                        .batchSize(1000)
+                        .epochs(20)
+                        .ignoreWords(
+                                List.of()//"by", "the", "this", "that", "a", "an", "and")
+                        )
+                        .build()
+        );
 
         final ClassificationResult classificationResult = documentClassifier.classify(
-                new String(new ClassPathResource("music-of-ancient-rome.wikipedia.txt").getInputStream().readAllBytes()));
+                new String(new ClassPathResource("gaius-marius.wikipedia.txt").getInputStream().readAllBytes()));
 
         assertThat(classificationResult.getMostLikelyLabel(), is("history"));
     }

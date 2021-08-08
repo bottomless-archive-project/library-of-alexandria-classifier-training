@@ -30,7 +30,7 @@ dependencies {
     implementation group: 'org.nd4j', name: 'nd4j-native-platform', version: '1.0.0-M1.1'
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testImplementation 'com.github.bottomless-archive-project:document-classifier:73adf76c77'
+    testImplementation 'com.github.bottomless-archive-project:document-classifier:048ba8268e'
 }
 
 test {
